@@ -1,4 +1,4 @@
-xtream_clicker.py = (clicker game)
+xtream_clicker.exe = (clicker game)
 YTOP_popcorn.exe = (popcorn game)
 winadminpro.py = (advanced windows administrator tools)
 win_cleaner.py = (just idk)
