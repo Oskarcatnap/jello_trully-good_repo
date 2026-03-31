@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jello Truly Good Repo</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #161616;
+            --sileo: #00f2ff;
+            --cydia: #ffcc00;
+            --text: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--sileo);
+            padding-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 { color: var(--sileo); font-size: 2.8rem; margin: 0; text-shadow: 0 0 10px rgba(0,242,255,0.5); }
+        .subtitle { color: var(--cydia); font-weight: bold; letter-spacing: 2px; }
+
+        #repo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid #333;
+            border-radius: 18px;
+            padding: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            border-color: var(--sileo);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .card h3 { color: var(--sileo); margin: 0 0 10px 0; font-size: 1.4rem; }
+        .card p { color: #ccc; font-style: italic; margin-bottom: 20px; }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(--sileo), var(--cydia));
+            color: #000;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            transition: opacity 0.2s;
+        }
+
+        .btn-download:hover { opacity: 0.9; }
+
+        footer { margin-top: 60px; color: #444; font-size: 0.9rem; border-top: 1px solid #222; padding-top: 20px; width: 100%; text-align: center; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🍮 Jello Repo</h1>
+    <div class="subtitle">Truly Good & Acid Approved</div>
+</header>
+
+<div id="repo-container">Connecting to GitHub...</div>
+
+<footer>
+    Created by Oskarcatnap. <br>
+    Verified by Sileo & Cydia. 🦈🐝
+</footer>
+
+<script>
+    // Твоя точная ссылка на описание
+    const descUrl = "https://raw.githubusercontent.com/Oskarcatnap/jello_trully-good_repo/refs/heads/main/repo/description.txt";
+    // Базовый путь для скачивания файлов
+    const baseDownloadUrl = "https://raw.githubusercontent.com/Oskarcatnap/jello_trully-good_repo/refs/heads/main/repo/";
+
+    async function fetchRepo() {
+        const container = document.getElementById('repo-container');
+        try {
+            const response = await fetch(descUrl);
+            if (!response.ok) throw new Error("Failed to reach description.txt");
+            const data = await response.text();
+            
+            const lines = data.split('\n').filter(line => line.trim() !== '');
+            container.innerHTML = '';
+
+            lines.forEach(line => {
+                if (line.includes('=') && line.includes('(')) {
+                    const [filePart, descPart] = line.split('=');
+                    const fileName = filePart.trim();
+                    const description = descPart.match(/\(([^)]+)\)/)[1];
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div>
+                            <h3>${fileName}</h3>
+                            <p>"${description}"</p>
+                        </div>
+                        <a href="${baseDownloadUrl}${fileName}" class="btn-download" download>Download</a>
+                    `;
+                    container.appendChild(card);
+                }
+            });
+        } catch (e) {
+            container.innerHTML = `<p style="color:red">Error: ${e.message}</p>`;
+        }
+    }
+
+    fetchRepo();
+</script>
+
+</body>
+</html>
