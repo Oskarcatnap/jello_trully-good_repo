@@ -1,0 +1,7 @@
+xtream_clicker.py = (clicker game)
+YTOP_popcorn.exe = (popcorn game)
+winadminpro.py = (advanced windows administrator tools)
+win_cleaner.py = (just idk)
+ugo.py = (a game)
+sote_explorer.py = (custom file explorer)
+sote_browser.py = (web browser)
